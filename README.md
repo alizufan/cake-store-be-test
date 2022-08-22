@@ -35,11 +35,12 @@ To run this project you need some preparation :
 - `go mod tidy` installing a module
 - `go run .` run it
 
-To test API you can use a OpenApi extension from vs code. [Open API on VSCode](https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi)
+To test api you can use a OpenApi extension from vs code. [Open API on VSCode](https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi)
 
-If You want easily to run this project, use with docker compose :
+If you want easily to run this project, use with docker compose and run a migration (install migrator tools first) :
 ```
 docker compose up -d
+migrate -path ./migrations -database "mysql://root:secret@tcp(localhost:3306)/cake-store" -verbose up
 ```
 If you wanna change a environment you can change in docker-compose.yml.
 
