@@ -1,0 +1,21 @@
+# Ignore all
+*
+
+# Unignore all with extensions
+!*.*
+
+# Ignore Win Executeable
+*.exe
+
+# Ignore Env
+*.env
+
+# Ignore logs
+/logs/*
+
+# Unignore File
+!Dockerfile
+!Makefile
+
+# Unignore all dirs
+!*/

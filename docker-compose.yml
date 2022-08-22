@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:latest
+    restart: always
+    command: --default-authentication-plugin=caching_sha2_password
+    volumes:
+      - mysql_db_data:/var/lib/mysql
+    expose:
+      - 3306
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: cake-store
+      MYSQL_ROOT_PASSWORD: secret
+
+  cake-store:
+    build:
+      context: .
+    container_name: cake-store
+    image: cake-store:latest
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - cake_store_logs:/logs
+    environment:
+      API_PORT: 3000
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: cake-store
+      DB_USER: root
+      DB_PASS: secret
+
+volumes:
+  mysql_db_data:
+    name: mysql_db_data
+  cake_store_logs:
+    name: cake_store_logs

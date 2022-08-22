@@ -1,0 +1,9 @@
+CREATE TABLE cakes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL DEFAULT '',
+    description TEXT NULL,
+    rating DECIMAL(5,2) NOT NULL DEFAULT 0.00,
+    image VARCHAR(255) NOT NULL DEFAULT '',
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL
+);

@@ -12,20 +12,6 @@ paths:
     get:
       parameters:
         - in: query
-          description: |
-            page by default is 1
-          name: page
-          schema:
-            type: integer
-
-        - in: query
-          name: limit
-          description: |
-            limit by default is 10
-          schema:
-            type: integer
-
-        - in: query
           name: title
           schema:
             type: string
@@ -35,37 +21,11 @@ paths:
           schema:
             type: string
 
-        - in: query
-          name: rating
-          schema:
-            type: integer
-            format: float
-
-        - in: query
-          name: order_by_alphabetical
-          description: |
-            alphabetical order by default is desc
-          schema:
-            type: string
-            enum:
-              - asc
-              - desc
-
-        - in: query
-          name: order_by_rating
-          description: |
-            rating order by default is desc
-          schema:
-            type: string
-            enum:
-              - asc
-              - desc
-
       operationId: GetCakes
       description: |
         show a list of cakes, 
-        cakes sorted by rating and alphabetically,
-        info. payload data always order by rating and alphabetically in desc.
+        cakes sorted by rating and title,
+        info. payload data always order by rating and title in desc.
       responses:
         '200':
           description: success
@@ -86,26 +46,6 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/Cake'
-                      error:
-                        default: null
-
-        '404':
-          description: not found error
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/DefaultResponse'
-                  - type: object
-                    properties:
-                      code:
-                        type: integer
-                        example: 404
-                      message:
-                        type: string
-                        example: "search cakes, records not found"
-                      payload:
-                        default: null
                       error:
                         default: null
 
@@ -170,6 +110,26 @@ paths:
                       error:
                         default: null
 
+        '400':
+          description: invalid validation error
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      code:
+                        type: integer
+                        example: 400
+                      message:
+                        type: string
+                        example: "parse request body, an error occured"
+                      payload:
+                        default: null
+                      error:
+                        default: null
+
         '422':
           description: invalid validation error
           content:
@@ -184,7 +144,7 @@ paths:
                         example: 422
                       message:
                         type: string
-                        example: "adding new cake, invalid request error"
+                        example: "unprocessable request body, an error occured"
                       payload:
                         default: null
                   - $ref: '#/components/schemas/ValidationError'
@@ -329,8 +289,8 @@ paths:
                       error:
                         default: null
 
-        '404':
-          description: not found error
+        '400':
+          description: invalid request error
           content:
             application/json:
               schema:
@@ -340,10 +300,10 @@ paths:
                     properties:
                       code:
                         type: integer
-                        example: 404
+                        example: 400
                       message:
                         type: string
-                        example: "updating a cake, record not found"
+                        example: "parse request body, an error occured"
                       payload:
                         default: null
                       error:
@@ -363,7 +323,7 @@ paths:
                         example: 422
                       message:
                         type: string
-                        example: "updating a cake, invalid request"
+                        example: "unprocessable request body, an error occured"
                       payload:
                         default: null
                   - $ref: '#/components/schemas/ValidationError'
